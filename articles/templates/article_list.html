@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles{% endblock title %}
+
+{% block content %}
+    {% for article in object_list %}
+        <div class="card">
+            <a href="{% url 'article_detail' article.pk%}" style="text-decoration: none">
+            <div class="card-header" style="color: black">
+                <span class="font-weight-bold"><strong>{{ article.title }}</strong></span> &middot;
+                <span class="text-muted">by {{ article.author }} | {{ article.date }}</span>
+            </div>
+            <div class="card-body" style="color: darkslategrey">
+                {{ article.body }}
+            </div>
+            </a>
+            <div class="card-footer text-center text-muted">
+                <a class="btn btn-success ml-2" style="color: white" href="{% url 'article_edit' article.pk%}">Edit</a> |
+                <a class="btn btn-danger ml-2" href="{% url 'article_delete' article.pk %}">Delete</a>
+            </div>
+            <div content="card-footer">
+                {% for comment in article.comments.all %}
+                    <p style="margin-left: 17px">
+                        <span class="font-weight-bold">
+                            <strong>{{ comment.author }}</strong> &middot;
+                        </span>
+                        {{ comment }}
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+        <br />
+    {% endfor %}
+{% endblock content %}
